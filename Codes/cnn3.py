@@ -13,9 +13,7 @@
 #  limitations under the License.
 """Convolutional Neural Network Estimator for MNIST, built with tf.layers."""
 
-#from __future__ import absolute_import
-#from __future__ import division
-#from __future__ import print_function
+
 import os
 from scipy import misc
 import sys
@@ -27,106 +25,8 @@ from tensorflow.contrib.learn.python.learn.estimators import model_fn as model_f
 import sys
 import argparse
 from preprocess import read_data_2, read_data_3, labelFolder, imageFolder
-#import cv2 
 tf.logging.set_verbosity(tf.logging.INFO)
 
-from scipy import misc
-import numpy as np
-test_file = "/home/sensiflow/Documents/magicbook/test.txt"
-valid_file = "/home/sensiflow/Documents/magicbook/valid.txt"
-train_file = "/home/sensiflow/Documents/magicbook/train.txt"
-def read_data(filename):
-  test_file = open(filename,"r")
-  lines = test_file.readlines()
-  #print lines
-  content = [x.strip() for x in lines]
-  images = []
-  labels = []
-  for item in content:
-    #print eval(item)[0]
-    image_name = "/home/sensiflow/Documents/magicbook/data/" + eval(item)[0]
-    #print image_name
-    image = misc.imread(image_name)
-    image = np.array(image,dtype = np.float32)
-    image = image.flatten()
-    images.append(image)
-    
-    labels.append(int(eval(item)[1]))
-    
-  images = np.array(images,dtype = np.float32)
-  labels = np.array(labels, dtype  = np.int32)
-  return images, labels
-def preprocess_image2(image):
-  image = cv2.cvtColor(image, cv2.COLOR_BRG2GRAY)
-  sum_img = 0
-  for i in range(image.shape[1]):
-    for j in range(image.shape[0]):
-      sum_img = sum_img + image[j][i];
-  avg = (sum_img*1.0)/(image.shape[1]*image.shape[2])
-  for i in range(image.shape[1]):
-    for j in range(image.shape[0]):
-      image[j][i] = image[j][i] - avg;
-  return image
-      #average = (int(image[j][i][0]) + int(image[j][i][1]) + int(image[j][i][2])*1.0)/3;
-      #image[j][i][0] = image[j][i][0] - average;
-      #image[j][i][1] = image[j][i][1] - average;
-      #image[j][i][2] = image[j][i][2] - average;
-  
-def preprocess_image(image):
-  for i in range(image.shape[1]):
-    for j in range(image.shape[0]):
-      average = (int(image[j][i][0]) + int(image[j][i][1]) + int(image[j][i][2])*1.0)/3;
-      image[j][i][0] = image[j][i][0] - average;
-      image[j][i][1] = image[j][i][1] - average;
-      image[j][i][2] = image[j][i][2] - average;
-  return image
-def preprocess_images(image_flattened):
-  sum_img = 0
-  #for i in range(image_flattened):
-    #sum_img = sum_img + image_flattened[i]
-  image_flattened /= 255.0
-
-  # for j in range(len(image_flattened)):
-  #   image_flattened[j] = (image_flattened[j]*1.0)/255
-  return image_flattened
-def read_images(fileNames):
-  img1 = cv2.imread(fileNames[0])
-  img1 = preprocess_image(img1)
-  img1 = np.array(img1,dtype = np.float32)
-  img1 = img1.flatten()
-  #img1 = preprocess_images(img1)
-  img2 = cv2.imread(fileNames[1])
-  img2 = preprocess_image(img2)
-  img2 = np.array(img2,dtype = np.float32)
-  img2 = img2.flatten()
-  #img2 = preprocess_images(img2)
-  img3 = np.vstack((img1,img2))
-  for i in range(2,len(fileNames)):
-    img = cv2.imread(fileNames[2])
-    img = preprocess_image(img)
-    img = np.array(img,dtype = np.float32)
-    img = img.flatten()
-    img3 = np.vstack((img3,img))
-
-  return img3
-train_dir = "/Users/didichi/Desktop/image2/train_1"
-test_dir = "/Users/didichi/Desktop/image2/test"
-
-def readfiles(dir):
-
-  image_stack = []
-  for filename in os.listdir(dir):
-    if filename == ".DS_Store":
-      continue
-    #print filename
-    img = misc.imread(os.path.join(dir,filename))
-    img = np.array(img,dtype = np.float32)
-    img = img.flatten()
-    if img is not None:
-      image_stack.append(img)
-  image_stack = np.array(image_stack, dtype = np.float32)
-  #print image_stack.shape
-  return image_stack
 
 def cnn_model_fn(features, labels, mode):
   #print(features.dtype)
@@ -237,34 +137,12 @@ def main(unused_argv):
   # Each entry in the tensor is a pixel intensity between 0 and 1, 
   # for a particular pixel in a particular image.
   
-  #depth = tf.constant(2)
-  #one_hot_encoded = tf.one_hot(indices = original_indices, depth = depth)
-  
-
-  #mnist = learn.datasets.load_dataset("mnist")
-  #train_data = read_images(fileNames) # mnist.train.images  # Returns np.array
-  train_data,train_labels = read_data(train_file)
-  #train_labels = original_indices # np.asarray(mnist.train.labels, dtype=np.int32)
-  
-  #eval_data = read_images(fileNames2) # mnist.test.images  # Returns np.array
-  eval_data,eval_labels = read_data(valid_file)
-  #eval_labels = original_indices2
+  # Read in data
 
   train, valid, _ = read_data_2(labelFolder, imageFolder)
   train_data, train_labels,_,_ = read_data_3(train)
   eval_data, eval_labels,_,_ = read_data_3(valid)
-  '''
-  print(train_data.dtype)
-  print(train_labels.dtype)
-  print(eval_data.dtype)
-  print(eval_labels.dtype)
   
-  print train_data.shape
-  print train_labels.shape
-  print eval_data.shape
-  print eval_labels.shape
-  #print train_data[0]
-  '''
   
   sess = tf.InteractiveSession()
   validation_metrics = {
@@ -328,10 +206,7 @@ def main(unused_argv):
   #tf.summary.scalar('accuracy',accuracy)
   print(eval_results)
 
-  #merged = tf.summary.merge_all()
- # train_writer = tf.summary.FileWriter('/tmp/book' + '/train',sess.graph)
-  #test_writer = tf.summary.FileWriter('/tmp/book' + '/test')
-  #tf.global_variables_initializer().run()
+  
 
 
 
