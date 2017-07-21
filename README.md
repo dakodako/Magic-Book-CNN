@@ -1,7 +1,7 @@
 # Magic Book - Using Convolutional Neural Network for Book Detection
 
 In order to project the content onto a blank page in a book, a program which can locates the book is required. 
-This project uses covolutional neural network to localize the labels on four corners of the book so that a fairly precise location of the book can be found.
+This project uses covolutional neural network to localize the labels on four corners of the book so that a precise location of the book can be found.
 
 
 
@@ -37,10 +37,6 @@ This project uses covolutional neural network to localize the labels on four cor
 * The accuracy of the classification on the validation set is 0.9458 (after 60000 training iterations on 5446 128x128x3 images)
 * The accuracy of the regression on the validation set is 0.588 (after 250000 training iterations on 5446 128x128x3 images)
 
-## Authors
 
 
-
-
-## Acknowledgments
 
