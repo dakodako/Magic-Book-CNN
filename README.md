@@ -23,8 +23,7 @@ These instructions will get you a copy of the project up and running on your loc
 
 * Model.py stores the convolutional neural network structure
 * Run cnn_train.py to train the model and stores the model in '/output' directory under the directory that cnn_train.py is stored
-* Run cnn_evaluate.py to retore the model from '/output' and evaluate the model with the validation data set
-* It will prints out the accuracy for the classifier and the regression
+* Run cnn_evaluate.py to retore the model from '/output' and evaluate the model with the validation data set and it will prints out the accuracy for the classifier and the regression
 
 * The image data are stored in the folder "Image/003" under the project folder
 * The labels of the image data are store in the folder "Labels/003" under the project folder
@@ -44,17 +43,6 @@ These instructions will get you a copy of the project up and running on your loc
 
 Explain what these tests test and why
 
-```
-Give an example
-```
-
-### And coding style tests
-
-Explain what these tests test and why
-
-```
-Give an example
-```
 
 
 
