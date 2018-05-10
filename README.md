@@ -1,7 +1,7 @@
 # Magic Book - Using Convolutional Neural Network for Book Detection
 
 In order to project the content onto a blank page in a book, a program which can locate the book is required. 
-This project uses covolutional neural network to localize the labels on four corners of the book so that a precise location of the book can be found.
+This project uses convolutional neural network to localize the labels on four corners of the book so that a precise location of the book can be found.
 
 
 
